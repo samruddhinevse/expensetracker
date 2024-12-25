@@ -2,6 +2,9 @@ const IncomeSchema= require("../models/IncomeModel")
 
 
 exports.addIncome = async (req, res) => {
+
+    console.log(req.body);
+    
     const {title, amount, category, description, date}  = req.body
 
     const income = IncomeSchema({
@@ -48,3 +51,32 @@ exports.deleteIncome = async (req, res) =>{
             res.status(500).json({message: 'Server Error'})
         })
 }
+exports.updateIncome = async (req, res) => {
+    const { id } = req.params;
+    const { title, amount, category, description, date } = req.body;
+
+    // Prepare update object, only including the fields that are provided
+    const updateFields = {};
+    if (title) updateFields.title = title;
+    if (amount) updateFields.amount = amount;
+    if (category) updateFields.category = category;
+    if (description) updateFields.description = description;
+    if (date) updateFields.date = date;
+
+    try {
+        // Find income by id and update only the fields provided
+        const updatedIncome = await IncomeSchema.findByIdAndUpdate(
+            id,
+            updateFields,
+            { new: true } // Return the updated document
+        );
+
+        if (!updatedIncome) {
+            return res.status(404).json({ message: 'Income not found' });
+        }
+
+        res.status(200).json({ message: 'Income updated successfully', income: updatedIncome });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error' });
+    }
+};

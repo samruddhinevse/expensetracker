@@ -1,69 +1,44 @@
 import React from 'react'
-import {Chart as ChartJs, 
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
-    ArcElement,
+import { Chart as ChartJs, 
+    ArcElement, 
+    Tooltip, 
+    Legend 
 } from 'chart.js'
 
-import {Line} from 'react-chartjs-2'
+import { Pie } from 'react-chartjs-2' // Import Pie chart
 import styled from 'styled-components'
 import { useGlobalContext } from '../../context/globalContext'
-import { dateFormat } from '../../utils/dateFormat'
 
 ChartJs.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
     ArcElement,
+    Tooltip,
+    Legend
 )
 
 function Chart() {
-    const {incomes, expenses} = useGlobalContext()
+    const { incomes, expenses } = useGlobalContext()
+
+    // Calculate total income and expenses
+    const totalIncome = incomes.reduce((acc, income) => acc + income.amount, 0)
+    const totalExpenses = expenses.reduce((acc, expense) => acc + expense.amount, 0)
+    const total = totalIncome + totalExpenses
 
     const data = {
-        labels: incomes.map((inc) =>{
-            const {date} = inc
-            return dateFormat(date)
-        }),
+        labels: ['Income', 'Expenses'], // Pie chart sections
         datasets: [
             {
-                label: 'Income',
-                data: [
-                    ...incomes.map((income) => {
-                        const {amount} = income
-                        return amount
-                    })
-                ],
-                backgroundColor: 'green',
-                tension: .2
-            },
-            {
-                label: 'Expenses',
-                data: [
-                    ...expenses.map((expense) => {
-                        const {amount} = expense
-                        return amount
-                    })
-                ],
-                backgroundColor: 'red',
-                tension: .2
+                label: 'Finance Overview',
+                data: [totalIncome, totalExpenses], // Data for income and expenses
+                backgroundColor: ['green', 'red'], // Colors for income and expenses sections
+                borderColor: ['white', 'white'], // Border color for sections
+                borderWidth: 2
             }
         ]
     }
 
-
     return (
-        <ChartStyled >
-            <Line data={data} />
+        <ChartStyled>
+            <Pie data={data} /> {/* Use Pie chart */}
         </ChartStyled>
     )
 }

@@ -21,14 +21,14 @@ function Orb() {
     `
 
     const OrbStyled = styled.div`
-        width: 70vh;
-        height: 70vh;
+        width: 90vh;
+        height: 90vh;
         position: absolute;
         border-radius: 50%;
         margin-left: -37vh;
         margin-top: -37vh;
-        background: linear-gradient(180deg, #F56692 0%, #F2994A 100%);
-        filter: blur(400px);
+        background: linear-gradient(180deg,rgb(31, 9, 142) 0%,rgb(153, 237, 170) 100%);
+        filter: blur(200px);
         animation: ${moveOrb} 15s alternate linear infinite;
     `;
 

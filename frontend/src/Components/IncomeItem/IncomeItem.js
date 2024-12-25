@@ -12,7 +12,7 @@ function IncomeItem({
     category,
     description,
     deleteItem,
-    indicatorColor,
+    indicatorColor = 'var(--color-green)', // Default indicator color
     type
 }) {
 
@@ -85,7 +85,7 @@ function IncomeItem({
                             icon={trash}
                             bPad={'1rem'}
                             bRad={'50%'}
-                            bg={'var(--primary-color'}
+                            bg={'var(--primary-color)'} // Fixed the missing closing parenthesis
                             color={'#fff'}
                             iColor={'#fff'}
                             hColor={'var(--color-green)'}
