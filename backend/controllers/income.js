@@ -16,7 +16,7 @@ exports.addIncome = async (req, res) => {
     })
 
     try {
-        //validations
+        
         if(!title || !category || !description || !date){
             return res.status(400).json({message: 'All fields are required!'})
         }
@@ -55,7 +55,7 @@ exports.updateIncome = async (req, res) => {
     const { id } = req.params;
     const { title, amount, category, description, date } = req.body;
 
-    // Prepare update object, only including the fields that are provided
+    
     const updateFields = {};
     if (title) updateFields.title = title;
     if (amount) updateFields.amount = amount;
@@ -64,7 +64,7 @@ exports.updateIncome = async (req, res) => {
     if (date) updateFields.date = date;
 
     try {
-        // Find income by id and update only the fields provided
+       
         const updatedIncome = await IncomeSchema.findByIdAndUpdate(
             id,
             updateFields,
